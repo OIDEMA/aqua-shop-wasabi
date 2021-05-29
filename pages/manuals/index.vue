@@ -1,5 +1,4 @@
 <template>
-  <!-- <YouTube /> -->
   <Blog />
 </template>
 
@@ -9,7 +8,6 @@ import Blog from '~/components/blog.vue'
 
 export default {
   components: {
-    YouTube,
     Blog
   }
 }
