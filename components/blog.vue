@@ -16,11 +16,13 @@
         <v-img
           v-if="post._embedded[`wp:featuredmedia`] === undefined" src="http://aqua-wasabi.com/shop/info/img/shop01@2x.jpg"
           height="200px"
+          @click="manual_push(post.id)"
         ></v-img>
 
         <v-img
           v-else :src="post._embedded[`wp:featuredmedia`][0].source_url"
           height="200px"
+          @click="manual_push(post.id)"
         ></v-img>
 
 
@@ -41,7 +43,9 @@
 
         <v-card-actions>
           <v-btn
-            color="orange lighten-2"
+            color="green"
+            style="color: #fff;"
+            @click="manual_push(post.id)"
           >
             もっと見る
           </v-btn>
@@ -49,7 +53,6 @@
           <v-spacer></v-spacer>
 
         </v-card-actions>
-
 
       </v-card>
     </v-col>
@@ -67,10 +70,9 @@ export default {
   data: function() {
     return {
       posts: null,
-      show: false,
     };
   },
-  mounted() {
+  created() {
     axios
       // .get("http://aqua-wasabi.com/wp-json/wp/v2/posts?_embed", { params: { per_page: 3 }
       .get("https://sanuki-udon-love.net/wp-json/wp/v2/posts?_embed", { params: { per_page: 3 } 
@@ -81,11 +83,9 @@ export default {
       })
   },
   methods: {
-    async replaceStr(str) {
-      var string = await str.replace('<p>', '')
-      var string = await string.replace('</p>', '')
-      return string
-    }
+    manual_push(id) {
+      this.$router.push({ path: `/manuals/${id}` })
+    },
   }
 }
 </script>
@@ -93,5 +93,8 @@ export default {
 <style>
 .v-card__title p {
   margin-bottom: 0;
+}
+.v-image__image {
+  cursor: pointer;
 }
 </style>
