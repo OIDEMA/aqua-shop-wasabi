@@ -15,6 +15,20 @@
       </v-row>
     </v-container>
 
+
+    <v-container fluid>
+      <v-row>
+        <v-col>
+          <v-btn
+          v-for="(word, i) in words"
+          :key="i"
+          @click="searchVideoByTag(word)"
+          >{{ '# ' + word }}</v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
+
+
     <v-container>
       <v-row>
         <v-col 
@@ -33,12 +47,13 @@
               ></v-progress-linear>
             </template>
 
-            <a v-bind:href="'https://www.youtube.com/watch?v=' + movie.id.videoId">
+            <!-- <a v-bind:href="'https://www.youtube.com/watch?v=' + movie.id.videoId"> -->
               <v-img
-                height="250"
-                v-bind:src="movie.snippet.thumbnails.high.url"
+                :src="movie.snippet.thumbnails.high.url"
+                @click="video_push(movie.id.videoId)"
+                style="cursor: pointer"
               ></v-img>
-            </a>
+            <!-- </a> -->
 
             <v-card-title>{{ movie.snippet.title }}</v-card-title>
                 
@@ -50,7 +65,7 @@
 
             <v-divider class="mx-4"></v-divider>
 
-            <v-card-title>関連タグ</v-card-title>
+            <!-- <v-card-title>関連タグ</v-card-title>
 
             <v-card-text>
               <v-chip-group
@@ -65,7 +80,7 @@
 
                 <v-chip>9:00PM</v-chip>
               </v-chip-group>
-            </v-card-text>
+            </v-card-text> -->
           </v-card>
         </v-col>
       </v-row>
@@ -85,34 +100,49 @@ export default {
         q: "", // 検索クエリを指定します。
         part: "snippet",
         type: "video",
-        maxResults: "20", // 最大検索数
+        maxResults: "21", // 最大検索数
         channelId: "UCDs7irJuIRA4G6jFxsgrFFw",
         key: "AIzaSyCAgz9qZTtugReIE9UN86J65IdSGb8OrqY"
-      }
+      },
+      words: [
+        "流木", "水槽サイズ", "水草水槽の作り方", "初心者", "熱帯魚"
+      ]
     };
   },
-  mounted() {
-    axios
-      .get("https://www.googleapis.com/youtube/v3/search", {
-        params: this.params
-      })
+  created() {
+    axios.get("https://www.googleapis.com/youtube/v3/search", { params: this.params })
       .then((res) => {
+        console.log(res.data.items)
         this.results = res.data.items;
-      })
+      }
+    )
   },
   methods: {
-    searchVideo: function() {
+    searchVideo() {
       this.params.q = this.keyword;
       var self = this;
-      axios
-        .get("https://www.googleapis.com/youtube/v3/search", {
-          params: this.params
-        })
-        .then(function(res) {
+      axios.get("https://www.googleapis.com/youtube/v3/search", { params: this.params })
+        .then((res) => {
           self.results = res.data.items;
           console.log(res.data.items)
-        })
+        }
+      )
+    },
+    searchVideoByTag(word) {
+      this.params.q = word;
+      this.keyword = word;
+      var self = this;
+      axios.get("https://www.googleapis.com/youtube/v3/search", { params: this.params })
+        .then((res) => {
+          self.results = res.data.items;
+          console.log(res.data.items)
+        }
+      )
+    },
+    video_push(id) {
+      console.log(id)
+      this.$router.push({ path: `/videos/${id}` })
     }
-  },
+  }
 }
 </script>
