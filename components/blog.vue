@@ -1,6 +1,20 @@
 <template>
 
 <v-container fluid pa-0 ma-0>
+
+  <v-container fluid>
+    <v-row>
+      <v-col>
+        <v-text-field
+          v-model="keyword"
+          outlined
+          label="検索キーワードを入力"
+          prepend-inner-icon="mdi-text-search"
+          @keyup="searchManuals"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+  </v-container>
   
   <v-container fluid pa-0 ma-0>
     <v-row>
@@ -14,17 +28,10 @@
         max-width="344"
       >
         <v-img
-          v-if="post._embedded[`wp:featuredmedia`] === undefined" src="http://aqua-wasabi.com/shop/info/img/shop01@2x.jpg"
+          :src="post['image']"
           height="200px"
           @click="manual_push(post.id)"
         ></v-img>
-
-        <v-img
-          v-else :src="post._embedded[`wp:featuredmedia`][0].source_url"
-          height="200px"
-          @click="manual_push(post.id)"
-        ></v-img>
-
 
         <v-card-title>
           <p>{{ post.title.rendered }}</p>
@@ -69,23 +76,50 @@ import axios from 'axios';
 export default {
   data: function() {
     return {
-      posts: null,
-    };
+      posts: [],
+      keyword: "",
+      };
   },
   created() {
-    axios
-      // .get("http://aqua-wasabi.com/wp-json/wp/v2/posts?_embed", { params: { per_page: 3 }
-      .get("https://sanuki-udon-love.net/wp-json/wp/v2/posts?_embed", { params: { per_page: 3 } 
-      })
+    axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/posts/?search=`)
       .then((res) => {
-        console.log(res.data)
-        this.posts = res.data
+        res.data.forEach((item) => {
+          axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/media/${item[`featured_media`]}`)
+          .then(async (a) => {
+            item['image'] = await a.data.guid.rendered
+            this.posts.push(item)
+          })
+        });
       })
   },
   methods: {
     manual_push(id) {
       this.$router.push({ path: `/manuals/${id}` })
     },
+    searchManuals() {
+      if (this.keyword) {
+        this.posts = []
+        const content = this.keyword
+        axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/posts/?search=${content}`)
+        .then((res) => {
+          res.data.forEach((item) => {
+            axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/media/${item[`featured_media`]}`)
+            .then(async (a) => {
+              item['image'] = await a.data.guid.rendered
+              this.posts.push(item)
+            })
+          });
+        })
+      }
+    },
+    setImage(url) {
+      axios
+      .get(url)
+      .then(async (res) => {
+        const image = await res.data.guid.rendered
+        return image
+      })
+    }
   }
 }
 </script>
