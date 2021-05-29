@@ -15,6 +15,21 @@
       </v-col>
     </v-row>
   </v-container>
+
+  <v-container>
+    <v-row justify="center" align="center">
+      <v-col>
+        <v-btn
+          v-for="(tag, i) in tags"
+          :key="i"
+          @click="searchTag(tag.id)"
+        >{{"#" + tag.name}}</v-btn>
+        <v-btn
+        @click="refreshData()"
+        >リフレッシュデータ</v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
   
   <v-container fluid pa-0 ma-0>
     <v-row>
@@ -77,6 +92,7 @@ export default {
   data: function() {
     return {
       posts: [],
+      tags: [],
       keyword: "",
       };
   },
@@ -90,7 +106,14 @@ export default {
             this.posts.push(item)
           })
         });
-      })
+      }
+    ),
+    axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/tags`)
+      .then((res) => {
+        console.log(res.data)
+        this.tags = res.data
+      }
+    )
   },
   methods: {
     manual_push(id) {
@@ -112,13 +135,32 @@ export default {
         })
       }
     },
-    setImage(url) {
-      axios
-      .get(url)
-      .then(async (res) => {
-        const image = await res.data.guid.rendered
-        return image
+    searchTag(tagId) {
+      this.posts = []
+      axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/posts/?tags=${tagId}`)
+      .then((res) => {
+        res.data.forEach((item) => {
+          axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/media/${item[`featured_media`]}`)
+          .then(async (a) => {
+            item['image'] = await a.data.guid.rendered
+            this.posts.push(item)
+          })
+        });
       })
+    },
+    refreshData() {
+      this.posts = []
+      axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/posts/?search=`)
+        .then((res) => {
+          res.data.forEach((item) => {
+            axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/media/${item[`featured_media`]}`)
+            .then(async (a) => {
+              item['image'] = await a.data.guid.rendered
+              this.posts.push(item)
+            })
+          });
+        }
+      )
     }
   }
 }
