@@ -9,7 +9,7 @@
             outlined
             label="検索キーワードを入力"
             prepend-inner-icon="mdi-text-search"
-            @keyup="searchVideo"
+            @keyup="searchVideo()"
           ></v-text-field>
         </v-col>
       </v-row>

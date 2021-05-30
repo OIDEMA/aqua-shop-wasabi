@@ -1,11 +1,41 @@
 <template>
   <v-app>
+    <v-navigation-drawer
+      v-model="drawer"
+      :mini-variant="miniVariant"
+      :clipped="clipped"
+      fixed
+      app
+    >
+      <v-list>
+        <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+        >
+          <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title" />
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
     <v-app-bar
       :clipped-left="clipped"
       fixed
       app
     >
-      <v-toolbar-title v-text="title" />
+    <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+    <v-img 
+      v-bind:src="imageLogo"
+      id="logo"
+      @click="root_push()"
+    >
+    </v-img>
     </v-app-bar>
 
     <v-main>
@@ -30,18 +60,37 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
+      imageLogo: require('@/assets/image/logo.svg'),
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
+          title: 'Home',
           to: '/'
         },
+        {
+          icon: 'mdi-apps',
+          title: 'manuals',
+          to: '/manuals'
+        },
       ],
+      
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'AQUASHOP wasabi'
+    }
+  },
+  methods: {
+    root_push() {
+      this.$router.push({ path: `/` })
     }
   }
 }
 </script>
+
+<style>
+#logo {
+  max-height: 60px;
+  max-width: 200px;
+  cursor: pointer;
+}
+</style>
