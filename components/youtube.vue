@@ -33,7 +33,7 @@
       <v-row>
         <v-col 
           lg="4" 
-          v-for="movie in results" v-bind:key="movie.id.videoId"
+          v-for="(video, i) in results" v-bind:key="i"
         >
           <v-card
             class="mx-auto my-12"
@@ -47,20 +47,18 @@
               ></v-progress-linear>
             </template>
 
-            <!-- <a v-bind:href="'https://www.youtube.com/watch?v=' + movie.id.videoId"> -->
-              <v-img
-                :src="movie.snippet.thumbnails.high.url"
-                @click="video_push(movie.id.videoId)"
-                style="cursor: pointer"
-              ></v-img>
-            <!-- </a> -->
+            <v-img
+              :src="video.snippet.thumbnails.high.url"
+              @click="video_push(video.id.videoId)"
+              style="cursor: pointer"
+            ></v-img>
 
-            <v-card-title>{{ movie.snippet.title }}</v-card-title>
+            <v-card-title>{{ video.snippet.title }}</v-card-title>
                 
             <v-divider class="mx-4"></v-divider>
 
             <v-card-text>
-              <div>{{ movie.snippet.description}}</div>
+              <div>{{ video.snippet.description }}</div>
             </v-card-text>
 
             <v-divider class="mx-4"></v-divider>
@@ -112,7 +110,6 @@ export default {
   created() {
     axios.get("https://www.googleapis.com/youtube/v3/search", { params: this.params })
       .then((res) => {
-        console.log(res.data.items)
         this.results = res.data.items;
       }
     )
@@ -124,7 +121,6 @@ export default {
       axios.get("https://www.googleapis.com/youtube/v3/search", { params: this.params })
         .then((res) => {
           self.results = res.data.items;
-          console.log(res.data.items)
         }
       )
     },
@@ -135,14 +131,21 @@ export default {
       axios.get("https://www.googleapis.com/youtube/v3/search", { params: this.params })
         .then((res) => {
           self.results = res.data.items;
-          console.log(res.data.items)
         }
       )
     },
     video_push(id) {
-      console.log(id)
       this.$router.push({ path: `/videos/${id}` })
     }
   }
 }
 </script>
+<style>
+.v-main {
+    background-color: #f8f8f8;
+}
+.container {
+    background-color: #fff;
+    margin-top: 3rem;
+}
+</style>

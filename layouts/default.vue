@@ -69,7 +69,7 @@ export default {
         },
         {
           icon: 'mdi-apps',
-          title: 'manuals',
+          title: 'マニュアル',
           to: '/manuals'
         },
       ],
@@ -89,8 +89,8 @@ export default {
 
 <style>
 #logo {
-  max-height: 60px;
-  max-width: 200px;
+  max-height: 50px;
+  max-width: 130px;
   cursor: pointer;
 }
 </style>
