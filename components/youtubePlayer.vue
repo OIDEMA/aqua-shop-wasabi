@@ -1,5 +1,6 @@
 <template>
   <v-container>
+
     <v-container fluid>
       <v-row>
         <v-col>
@@ -12,11 +13,9 @@
           ></v-text-field>
         </v-col>
       </v-row>
-    </v-container>
 
-    <v-container fluid>
       <v-row>
-        <v-col>
+        <v-col id="tag">
           <v-btn
           v-for="(word, i) in words"
           :key="i"
@@ -24,6 +23,7 @@
           >{{ '# ' + word }}</v-btn>
         </v-col>
       </v-row>
+
     </v-container>
 
     <v-container fluid pa-0 ma-0>
@@ -36,52 +36,13 @@
             class="mx-auto my-12"
             max-width="400"
           >
-            <template slot="progress">
-              <v-progress-linear
-                color="deep-purple"
-                height="10"
-                indeterminate
-              ></v-progress-linear>
-            </template>
 
-              <v-dialog
-                  transition="dialog-top-transition"
-                  max-width="1000"
-              >
+            <v-img
+              :src="video.snippet.thumbnails.high.url"
+              @click="video_push(video.id.videoId)"
+              style="cursor: pointer"
+            ></v-img>
 
-              <template v-slot:activator="{ on, attrs }">
-                <v-img
-                  :src="video.snippet.thumbnails.high.url"
-                  v-bind="attrs"
-                  v-on="on"
-                  style="cursor: pointer"
-                ></v-img>
-              </template>
-
-              <template v-slot:default="dialog">
-                <v-card>
-                    <v-toolbar
-                        color="success"
-                        style="color: #fff; font-weight: bold;"
-                      >
-                        {{ video.snippet.title }}
-                    </v-toolbar>
-
-                    <v-container fluid style="background: #000;">
-                      <v-row justify="center" align="center">
-                        <youtube :video-id="video.id.videoId" style="margin: 3rem auto;"></youtube>
-                      </v-row>
-                    </v-container>
-                    
-                    <v-card-actions class="justify-end">
-                        <v-btn
-                            text
-                            @click="dialog.value = false"
-                        >Close</v-btn>
-                    </v-card-actions>
-                </v-card>
-              </template>
-            </v-dialog>
           
             <v-card-title>{{ video.snippet.title }}</v-card-title>
                 
@@ -164,7 +125,11 @@ export default {
     background-color: #fff;
     margin-top: 3rem;
 }
-.v-card iframe {
-  margin: 0 auto;
+#tag .v-btn {
+  border-radius: 20px;
+  margin: 0 5px;
+  background-color: #fff !important;
+  border: 1px solid #000;
+  font-weight: bold;
 }
 </style>

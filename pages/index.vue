@@ -1,13 +1,13 @@
 <template>
-  <YouTube />
+  <YouTubePlayer />
 </template>
 
 <script>
-import YouTube from '~/components/youtube.vue'
+import YouTubePlayer from '~/components/youtubePlayer.vue'
 
 export default {
   components: {
-    YouTube
+    YouTubePlayer
   }
 }
 </script>
