@@ -1,5 +1,18 @@
 <template>
   <v-app>
+    <v-app-bar
+      :clipped-left="clipped"
+      fixed
+      app
+    >
+    <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+    <v-img 
+      v-bind:src="imageLogo"
+      id="logo"
+      @click="root_push()"
+    >
+    </v-img>
+    </v-app-bar>
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -24,19 +37,6 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar
-      :clipped-left="clipped"
-      fixed
-      app
-    >
-    <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-    <v-img 
-      v-bind:src="imageLogo"
-      id="logo"
-      @click="root_push()"
-    >
-    </v-img>
-    </v-app-bar>
 
     <v-main>
       <v-container>
@@ -73,7 +73,6 @@ export default {
           to: '/manuals'
         },
       ],
-      
       miniVariant: false,
       right: true,
       rightDrawer: false,

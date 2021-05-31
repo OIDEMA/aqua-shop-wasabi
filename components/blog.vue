@@ -29,7 +29,7 @@
     </v-container>
     
     <v-container fluid pa-0 ma-0>
-      <v-row justify="center" align="center">
+      <v-row>
         <v-col
           lg="4"
           v-for="(post, i) in posts"
@@ -166,14 +166,14 @@ export default {
 .v-card__title p {
   margin-bottom: 0;
 }
-.v-image__image {
+.v-image {
   cursor: pointer;
 }
 #tag .v-btn {
   border-radius: 20px;
   margin: 0 5px;
   background-color: #fff !important;
-  border: 1px solid #000;
+  border: 1px solid #E0E0E0;
   font-weight: bold;
 }
 </style>

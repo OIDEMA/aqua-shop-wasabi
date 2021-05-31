@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container fluid>
         <v-row justify="center" align="center">
             <youtube 
                 v-if="videoId"
@@ -8,10 +8,43 @@
                 style="margin: 3rem auto;" 
             />
         </v-row>
-        <v-row justify="center" align="center">
-            <v-btn  @click="playVideo()">再生する</v-btn>
-            <v-btn @click="pauseVideo()">停止する</v-btn>
-            <v-btn @click="root_push()">戻る</v-btn>
+        <v-row justify="center" align="center" id="controle">
+            <v-btn  
+                @click="playVideo()"
+            >
+            <v-icon
+                dark
+                left
+            >
+            mdi-play-box
+            </v-icon>
+                再生する
+            </v-btn>
+            <v-btn 
+                @click="pauseVideo()"
+            >
+            <v-icon
+                dark
+                left
+            >
+            mdi-square
+            </v-icon>
+            停止する
+            </v-btn>
+
+            <v-btn 
+                @click="root_push()"
+                color="success"
+            >
+                <v-icon
+                    dark
+                    left
+                >
+                mdi-arrow-left
+                </v-icon>
+                戻る
+            </v-btn>
+
         </v-row>
     </v-container>
 </template>
@@ -50,10 +83,18 @@ export default {
 }
 .container {
     background-color: #fff;
-    margin-top: 3rem;
+    margin-top: 2rem;
 }
 iframe {
     width: 80%;
     height: 500px;
+}
+#controle {
+    margin: 2rem auto;
+}
+#controle .v-btn {
+    margin: 0  5px;
+    border-radius: 25px;
+    padding: 0 30px;
 }
 </style>

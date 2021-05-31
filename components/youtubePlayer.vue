@@ -129,7 +129,7 @@ export default {
   border-radius: 20px;
   margin: 0 5px;
   background-color: #fff !important;
-  border: 1px solid #000;
+  border: 1px solid #E0E0E0;
   font-weight: bold;
 }
 </style>
