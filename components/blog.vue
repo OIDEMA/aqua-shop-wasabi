@@ -1,7 +1,6 @@
 <template>
 
 <v-container fluid pa-0 ma-0>
-
   <v-container fluid>
     <v-row>
       <v-col>
@@ -10,7 +9,7 @@
           outlined
           label="検索キーワードを入力"
           prepend-inner-icon="mdi-text-search"
-          @keyup="searchManuals"
+          @keyup="searchManuals()"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -32,7 +31,7 @@
   </v-container>
   
   <v-container fluid pa-0 ma-0>
-    <v-row>
+    <v-row justify="center" align="center">
       <v-col 
         lg="4"
         v-for="(post, i) in posts"
@@ -89,8 +88,10 @@
 import axios from 'axios';
 
 export default {
+
   data: function() {
     return {
+      videoId: "xTAtJHTe7xc",
       posts: [],
       tags: [],
       keyword: "",

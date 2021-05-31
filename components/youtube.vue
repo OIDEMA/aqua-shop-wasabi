@@ -1,6 +1,5 @@
 <template>
   <v-container>
-
     <v-container fluid>
       <v-row>
         <v-col>
@@ -15,7 +14,6 @@
       </v-row>
     </v-container>
 
-
     <v-container fluid>
       <v-row>
         <v-col>
@@ -28,8 +26,7 @@
       </v-row>
     </v-container>
 
-
-    <v-container>
+    <v-container fluid pa-0 ma-0>
       <v-row>
         <v-col 
           lg="4" 
@@ -47,12 +44,45 @@
               ></v-progress-linear>
             </template>
 
-            <v-img
-              :src="video.snippet.thumbnails.high.url"
-              @click="video_push(video.id.videoId)"
-              style="cursor: pointer"
-            ></v-img>
+              <v-dialog
+                  transition="dialog-top-transition"
+                  max-width="1000"
+              >
 
+              <template v-slot:activator="{ on, attrs }">
+                <v-img
+                  :src="video.snippet.thumbnails.high.url"
+                  v-bind="attrs"
+                  v-on="on"
+                  style="cursor: pointer"
+                ></v-img>
+              </template>
+
+              <template v-slot:default="dialog">
+                <v-card>
+                    <v-toolbar
+                        color="success"
+                        style="color: #fff; font-weight: bold;"
+                      >
+                        {{ video.snippet.title }}
+                    </v-toolbar>
+
+                    <v-container fluid style="background: #000;">
+                      <v-row justify="center" align="center">
+                        <youtube :video-id="video.id.videoId" style="margin: 3rem auto;"></youtube>
+                      </v-row>
+                    </v-container>
+                    
+                    <v-card-actions class="justify-end">
+                        <v-btn
+                            text
+                            @click="dialog.value = false"
+                        >Close</v-btn>
+                    </v-card-actions>
+                </v-card>
+              </template>
+            </v-dialog>
+          
             <v-card-title>{{ video.snippet.title }}</v-card-title>
                 
             <v-divider class="mx-4"></v-divider>
@@ -63,22 +93,6 @@
 
             <v-divider class="mx-4"></v-divider>
 
-            <!-- <v-card-title>関連タグ</v-card-title>
-
-            <v-card-text>
-              <v-chip-group
-                active-class="deep-purple accent-4 white--text"
-                column
-              >
-                <v-chip>5</v-chip>
-
-                <v-chip>7:30PM</v-chip>
-
-                <v-chip>8:00PM</v-chip>
-
-                <v-chip>9:00PM</v-chip>
-              </v-chip-group>
-            </v-card-text> -->
           </v-card>
         </v-col>
       </v-row>
@@ -100,8 +114,10 @@ export default {
         type: "video",
         maxResults: "21", // 最大検索数
         channelId: "UCDs7irJuIRA4G6jFxsgrFFw",
-        key: "AIzaSyCAgz9qZTtugReIE9UN86J65IdSGb8OrqY"
+        key: "AIzaSyBs8lTRdT_XUSbZX_8HMIsTssbKpjSQY2s"
       },
+      // AIzaSyCAgz9qZTtugReIE9UN86J65IdSGb8OrqY
+      // AIzaSyBs8lTRdT_XUSbZX_8HMIsTssbKpjSQY2s
       words: [
         "流木", "水槽サイズ", "水草水槽の作り方", "初心者", "熱帯魚"
       ]
@@ -147,5 +163,8 @@ export default {
 .container {
     background-color: #fff;
     margin-top: 3rem;
+}
+.v-card iframe {
+  margin: 0 auto;
 }
 </style>
