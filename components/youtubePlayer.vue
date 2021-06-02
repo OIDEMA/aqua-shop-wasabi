@@ -17,10 +17,10 @@
       <v-row>
         <v-col id="tag">
           <v-btn
-          v-for="(word, i) in words"
+          v-for="(tag, i) in tags"
           :key="i"
-          @click="searchVideoByTag(word)"
-          >{{ '# ' + word }}</v-btn>
+          @click="searchVideoByTag(tag.name)"
+          >{{ '# ' + tag.name }}</v-btn>
         </v-col>
       </v-row>
 
@@ -63,6 +63,8 @@
 <script>
 
 import axios from 'axios';
+import firebase from '@/plugins/firebase'
+import 'firebase/firestore';
 
 export default {
   data: function() {
@@ -79,9 +81,7 @@ export default {
       },
       // AIzaSyCAgz9qZTtugReIE9UN86J65IdSGb8OrqY
       // AIzaSyBs8lTRdT_XUSbZX_8HMIsTssbKpjSQY2s
-      words: [
-        "流木", "水槽サイズ", "水草水槽の作り方", "初心者", "熱帯魚"
-      ]
+      tags: []
     };
   },
   created() {
@@ -89,7 +89,8 @@ export default {
       .then((res) => {
         this.results = res.data.items;
       }
-    )
+    ),
+    this.getTags()
   },
   methods: {
     searchVideo() {
@@ -113,6 +114,22 @@ export default {
     },
     video_push(id) {
       this.$router.push({ path: `/videos/${id}` })
+    },
+    getTags() {
+    const firestore = firebase.firestore()
+    const tags = firestore.collection('tags')
+    tags
+    .get()
+      .then((doc) => {
+        doc.docs.forEach(tag => {
+          firestore.collection('tags').doc(tag.id)
+            .get()
+              .then(async(item) => {
+                this.tags.push(item.data())
+              }
+            )
+          })
+      })
     }
   }
 }
