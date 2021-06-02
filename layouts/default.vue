@@ -44,12 +44,12 @@
       </v-container>
     </v-main>
 
-    <v-footer
+    <!-- <v-footer
       :absolute="!fixed"
       app
     >
       <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    </v-footer> -->
   </v-app>
 </template>
 
@@ -72,10 +72,14 @@ export default {
           title: 'マニュアル',
           to: '/manuals'
         },
+        {
+          icon: 'mdi-apps',
+          title: '質問カテゴリ',
+          to: '/categories'
+        }
       ],
       miniVariant: false,
       right: true,
-      rightDrawer: false,
     }
   },
   methods: {
