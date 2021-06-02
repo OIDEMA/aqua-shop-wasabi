@@ -75,7 +75,7 @@ export default {
         type: "video",
         maxResults: "21", // 最大検索数
         channelId: "UCDs7irJuIRA4G6jFxsgrFFw",
-        key: "AIzaSyBs8lTRdT_XUSbZX_8HMIsTssbKpjSQY2s"
+        key: "AIzaSyCAgz9qZTtugReIE9UN86J65IdSGb8OrqY"
       },
       // AIzaSyCAgz9qZTtugReIE9UN86J65IdSGb8OrqY
       // AIzaSyBs8lTRdT_XUSbZX_8HMIsTssbKpjSQY2s
