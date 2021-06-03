@@ -76,6 +76,11 @@ export default {
           icon: 'mdi-apps',
           title: '質問カテゴリ',
           to: '/categories'
+        },
+        {
+          icon: 'mdi-apps',
+          title: 'お問い合わせ',
+          to: '/contact'
         }
       ],
       miniVariant: false,

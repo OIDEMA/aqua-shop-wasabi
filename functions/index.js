@@ -8,8 +8,8 @@ const adminEmail = functions.config().admin.email;
 const mailTransport = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: gmailEmail,
-    pass: gmailPassword
+    user: "k-goda@oidema-jp.com",
+    pass: "keisuke0817gdk"
   }
 });
 
@@ -33,15 +33,15 @@ exports.sendMail = functions.https.onCall(async (data, context) => {
   let adminMail = {
     from: gmailEmail,
     to: adminEmail,
-    subject: "ホームページお問い合わせ",
+    subject: "Wasabi Tablet Systemからの問い合わせ",
     text: adminContents(data)
   };
 
   // 管理者へのメール送信
   try {
     await mailTransport.sendMail(adminMail);
-   } catch (e) {
-    console.error(`send failed. ${e}`);
+   } catch (err) {
+    console.error(`send failed. ${err}`);
     throw new functions.https.HttpsError('internal', 'send failed');
    }
   }
