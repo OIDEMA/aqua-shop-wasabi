@@ -46,10 +46,6 @@
             </v-btn>
 
         </v-row>
-        <iFrame
-          src="https://reserve.aqua-wasabi.com/contact/"
-        >
-        </iFrame>
     </v-container>
 </template>
 
@@ -90,8 +86,8 @@ export default {
     margin-top: 2rem;
 }
 iframe {
-    width: 100%;
-    height: 100vh;
+    width: 80%;
+    height: 480px;
 }
 #controle {
     margin: 2rem auto;
