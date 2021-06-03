@@ -9,6 +9,7 @@
                 class="mx-auto"
                 width="330"
                 height="110"
+                elevation="8"
             >
 
                 <v-card-text>

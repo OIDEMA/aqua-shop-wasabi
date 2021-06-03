@@ -8,8 +8,8 @@ const adminEmail = functions.config().admin.email;
 const mailTransport = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "k-goda@oidema-jp.com",
-    pass: "keisuke0817gdk"
+    user: gmailEmail,
+    pass: gmailPassword
   }
 });
 

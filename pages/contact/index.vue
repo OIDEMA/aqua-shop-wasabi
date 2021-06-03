@@ -1,7 +1,8 @@
 <template>
-    <v-container fluid>
+    <v-container fluid ma-0 pa-0>
         <v-row justify="center" align="center">
             <iFrame
+            class="contact"
             src="https://reserve.aqua-wasabi.com/contact/"
             >
             </iFrame>
@@ -17,18 +18,10 @@
     background-color: #fff;
     margin-top: 2rem;
 }
-iframe {
+.contact {
     width: 100%;
     height: 100vh;
     border: none;
-}
-#controle {
-    margin: 2rem auto;
-}
-#controle .v-btn {
-    margin: 0  5px;
-    border-radius: 25px;
-    padding: 0 30px;
 }
 </style>
 
