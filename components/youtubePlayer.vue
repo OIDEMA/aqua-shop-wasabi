@@ -29,7 +29,7 @@
     <v-container fluid pa-0 ma-0>
       <v-row>
         <v-col 
-          lg="4" 
+          sm="4" 
           v-for="(video, i) in results" v-bind:key="i"
         >
           <v-card

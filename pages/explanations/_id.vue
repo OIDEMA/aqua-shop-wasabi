@@ -72,7 +72,7 @@ export default {
             this.playing = false
         },
         root_push() {
-            this.$router.push({ path: `/videos` })
+            this.$router.push({ path: `/` })
         }
     },
 }
@@ -82,6 +82,7 @@ export default {
     background-color: #f8f8f8;
 }
 .container {
+    margin: 1rem auto;
     background-color: #fff;
     margin-top: 2rem;
 }

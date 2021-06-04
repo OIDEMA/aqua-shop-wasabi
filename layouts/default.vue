@@ -69,11 +69,6 @@ export default {
         },
         {
           icon: 'mdi-apps',
-          title: 'マニュアル',
-          to: '/manuals'
-        },
-        {
-          icon: 'mdi-apps',
           title: '質問カテゴリ',
           to: '/categories'
         },
@@ -81,6 +76,16 @@ export default {
           icon: 'mdi-apps',
           title: 'お問い合わせ',
           to: '/contact'
+        },
+        {
+          icon: 'mdi-apps',
+          title: 'マニュアル',
+          to: '/manuals'
+        },
+        {
+          icon: 'mdi-apps',
+          title: '動画検索',
+          to: '/search'
         }
       ],
       miniVariant: false,
