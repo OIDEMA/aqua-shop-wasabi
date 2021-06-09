@@ -3,20 +3,26 @@
     <v-row align="center" justify="center">
         <v-col 
             sm="4" 
-            v-for="(category, i) in categories"
+            v-for="(category, i) in sortCategories"
             v-bind:key="i"
         >
             <v-card
                 class="mx-auto"
-                width="330"
-                height="110"
+                width="340"
+                height="180"
                 elevation="8"
-                @click="category_push(category.id)"
+                @click="category_push(category.uid)"
             >
+                <v-avatar
+                color="success"
+                size="52"
+                >
+                <span class="white--text text-h5">{{ category.id }}</span>
+                </v-avatar>
 
                 <v-card-text>
                     <p class="text-h6">
-                        {{ category.name }}
+                        {{ category.title }}
                     </p>
                 </v-card-text>
                 
@@ -27,58 +33,64 @@
 </template>
 
 <script>
+import firebase from '@/plugins/firebase'
+import 'firebase/firestore';
+
 export default {
   data: function() {
     return {
-        categories: [
-            {
-                id: 1,
-                name: "①初めて水草水槽を始める方から多い質問"
-            },
-            {
-                id: 2,
-                name: "②水草に関するご質問"
-            },
-            {
-                id: 3,
-                name: "③器材に関するご質問"
-            },
-            {
-                id: 4,
-                name: "④レイアウトデザインに関するご質問"
-            },
-            {
-                id: 5,
-                name: "⑤レイアウト素材（石・流木）に関するご質問"
-            },
-            {
-                id: 6,
-                name: "⑥水質に関するご質問（トラブル・コケ問題など）"
-            },
-            {
-                id: 7,
-                name: "⑦生き物に関するご質問"
-            },
-            {
-                id: 8,
-                name: "⑧水草水槽の作り方に関するご質問"
-            },
-            {
-                id: 9,
-                name: "⑨サポートに関するご質問（初期不良・修理受付・お取り寄せなど）"
-            },
-            {
-                id: 10,
-                name: "⑩その他のご質問"
-            }
-        ]
+        categories: []
     };
   },
-    methods: {
-        category_push(id) {
-            this.$router.push({ path: `/categories/${id}` })
-        },
+　computed: {
+    sortCategories() {
+        return this.categories.sort((a, b) => {
+            console.log(this.categories)
+            return a.id - b.id;
+        });
     }
+　},
+  mounted() {
+    this.getCategories()  
+  },
+  methods: {
+    getCategories() {
+    const firestore = firebase.firestore()
+    const categories = firestore.collection('categories')
+    categories
+    .get()
+      .then((doc) => {
+        doc.docs.forEach(category => {
+          firestore.collection('categories').doc(category.id)
+            .get()
+              .then(async(doc) => {
+                await this.getCategoryId(doc.data())
+              }
+            )
+            .catch((err) => {
+              throw err
+            })
+        })
+      })
+   },
+   async getCategoryId(category) {
+     firebase.firestore().collection('categories')
+      .where('title', '==', category.title)
+      .get()
+        .then( async (snapshots) => {
+          const categoryId = await snapshots.docs[0].id
+          const item = Object.assign( { uid: categoryId }, category )
+          console.log({item:    item})
+          this.categories.push(item)
+        })
+        .catch((err) => {
+          throw err
+        })
+   },
+    category_push(id) {
+        this.$router.push({ path: `/categories/${id}` })
+    },
+  }
 }
 </script>
 <style>
