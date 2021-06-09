@@ -20,7 +20,7 @@
       fixed
       app
     >
-      <v-list>
+      <v-list style="margin: 3rem auto;">
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -39,7 +39,7 @@
     </v-navigation-drawer>
 
     <v-main>
-      <v-container>
+      <v-container  >
         <nuxt />
       </v-container>
     </v-main>
@@ -79,7 +79,7 @@ export default {
         },
         {
           icon: 'mdi-apps',
-          title: 'マニュアル',
+          title: 'マニュアル検索',
           to: '/manuals'
         },
         {

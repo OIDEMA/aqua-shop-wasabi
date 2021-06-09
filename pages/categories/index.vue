@@ -76,7 +76,7 @@ export default {
   },
     methods: {
         category_push(id) {
-            this.$router.push({ path: `categories/${id}` })
+            this.$router.push({ path: `/categories/${id}` })
         },
     }
 }

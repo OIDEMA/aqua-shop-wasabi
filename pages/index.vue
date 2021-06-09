@@ -19,9 +19,61 @@
           </v-col>
         </v-row>
 
-        <v-btn>
-          初めての            
-        </v-btn>
+        <v-row justify="center" align="center">
+          <v-col col="6">
+            <v-dialog
+              v-model="dialog"
+              width="500"
+            >
+
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn 
+                block
+                color="primary"
+                v-bind="attrs"
+                v-on="on"
+              >
+                初めてご利用される方はこちら     
+              </v-btn>
+            </template>
+
+            <v-card>
+                    <v-card-title class="text-h5 success lighten-2">
+                      利用規約への同意
+                    </v-card-title>
+
+                    <v-card-text style="margin: 3rem auto; padding: 0 1rem;">
+                      こちらに利用規約チックなものを入れる
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        color="primary"
+                        text
+                        @click="root_push()"
+                      >
+                        同意する
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+            </v-dialog>
+          </v-col>
+
+          <v-col
+            col="6">
+            <v-btn
+              block
+              color="success"
+              @click="category_push()"
+            >
+            過去に利用した頃がある方はこちら
+            </v-btn>
+          </v-col>
+        </v-row>
+
     </v-container>
 </template>
 
@@ -29,11 +81,10 @@
 export default {
     data: function() {
         return {
-            playing: false,
-            videoId: "WEsMLQLAyC8",
+            dialog: false,
             videos: [
               {
-                id: "WEsMLQLAyC8",
+                id: "OaSZFci-ryE",
                 name: "初めての方への動画"
               },
               {
@@ -62,7 +113,14 @@ export default {
             this.playing = false
         },
         explanation_push(id) {
-            this.$router.push({ path: `explanations/${id}` })
+            this.$router.push({ path: `/explanations/${id}` })
+        },
+        category_push() {
+            this.$router.push({ path: `/categories` })
+        },
+        root_push() {
+            this.dialog = false
+            this.$router.push({ path: `/` })
         },
     },
 }
@@ -80,5 +138,9 @@ export default {
 #home .container {
     background-color: #fff;
     margin: 1rem auto;
+}
+#home .v-btn {
+  margin: 1rem auto;
+  height: 100px;
 }
 </style>

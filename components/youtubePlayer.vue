@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container id="player">
 
     <v-container fluid>
       <v-row>
@@ -77,10 +77,14 @@ export default {
         type: "video",
         maxResults: "21", // 最大検索数
         channelId: "UCDs7irJuIRA4G6jFxsgrFFw",
-        key: "AIzaSyCAgz9qZTtugReIE9UN86J65IdSGb8OrqY"
+        key: "AIzaSyAfKQMkRZfPs53k2YaFzy8Md4O9hOTEWu0"
       },
       // AIzaSyCAgz9qZTtugReIE9UN86J65IdSGb8OrqY
       // AIzaSyBs8lTRdT_XUSbZX_8HMIsTssbKpjSQY2s
+      // AIzaSyAfKQMkRZfPs53k2YaFzy8Md4O9hOTEWu0 /* wasabiアカウントのもの　*/ 
+      // UCDs7irJuIRA4G6jFxsgrFFw
+      // UCztmY1xMiY8rAfgCK767vTg
+      // https://www.googleapis.com/youtube/v3/videos?id=OaSZFci-ryE&type=video&key=AIzaSyAfKQMkRZfPs53k2YaFzy8Md4O9hOTEWu0
       tags: []
     };
   },
@@ -138,9 +142,8 @@ export default {
 .v-main {
     background-color: #f8f8f8;
 }
-.container {
+#player .container {
     background-color: #fff;
-    margin-top: 3rem;
 }
 #tag .v-btn {
   border-radius: 20px;
