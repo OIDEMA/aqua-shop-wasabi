@@ -63,22 +63,22 @@ export default {
       imageLogo: require('@/assets/image/logo.svg'),
       items: [
         {
-          icon: 'mdi-apps',
+          icon: 'mdi-home',
           title: 'Home',
           to: '/'
         },
         {
-          icon: 'mdi-apps',
+          icon: 'mdi-message-text',
           title: '質問カテゴリ',
           to: '/categories'
         },
         {
-          icon: 'mdi-apps',
+          icon: 'mdi-email',
           title: 'お問い合わせ',
           to: '/contact'
         },
         {
-          icon: 'mdi-apps',
+          icon: 'mdi-wrench',
           title: 'マニュアル検索',
           to: '/manuals'
         },

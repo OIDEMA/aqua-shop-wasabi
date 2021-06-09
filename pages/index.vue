@@ -1,21 +1,70 @@
 <template>
     <v-container fluid id="home">
-        <v-row justify="center" align="center">
+        <v-row justify="center" align="center" style="margin-top: 3rem;">
           <v-col
             sm="4"
-            v-for="(video, i) in videos"
-            v-bind:key="i"
-            @click="explanation_push(video.id)"
+            @click="explanation_push(videos[0].id)"
+            >
+              <v-card
+                id="top_1"
+                elevation="12"
+                height="180"
+              >
+                <v-icon
+                large
+                >mdi-play-circle
+                </v-icon>
+              </v-card>
+              <v-container style="background-color: #f8f8f8;">
+                <v-row align="center" justify="center">
+                </v-row>
+              </v-container>
+          </v-col>
+
+          <v-col
+            sm="4"
+            @click="explanation_push(videos[1].id)"
+            >
+
+              <v-card
+                id="top_2"
+                elevation="12"
+                height="180"
+              >
+                <v-icon
+                  large
+                >mdi-play-circle</v-icon>
+              </v-card>
+              <v-container style="background-color: #f8f8f8;">
+                <v-row align="center" justify="center" style="font-weight: bold;"
+                @click="contact_push()"
+                >
+                「お問い合わせはこちら」
+                </v-row>
+              </v-container>
+          </v-col>
+
+          <v-col
+            sm="4"
+            @click="explanation_push(videos[2].id)"
             >
 
               <v-card
                 elevation="12"
                 height="180"
+                id="top_3"
               >
-                <v-card-text>
-                  {{ video.name }}
-                </v-card-text>
+                <v-icon
+                  large
+                >mdi-play-circle</v-icon>
               </v-card>
+              <v-container style="background-color: #f8f8f8;">
+                <v-row align="center" justify="center" style="font-weight: bold; cursor: pointer;"
+                @click="contact_push()"
+                >
+                  「お問い合わせはこちら」
+                </v-row>
+              </v-container>
           </v-col>
         </v-row>
 
@@ -33,17 +82,17 @@
                 v-bind="attrs"
                 v-on="on"
               >
-                初めてご利用される方はこちら     
+              過去に利用した頃がある方
               </v-btn>
             </template>
 
             <v-card>
                     <v-card-title class="text-h5 success lighten-2">
-                      利用規約への同意
+                      利用されたことがある方
                     </v-card-title>
 
-                    <v-card-text style="margin: 3rem auto; padding: 0 1rem;">
-                      こちらに利用規約チックなものを入れる
+                    <v-card-text style="margin: 3rem auto; padding: 0 1rem; color: #000;">
+                      規約を守ってご利用ください。
                     </v-card-text>
 
                     <v-divider></v-divider>
@@ -53,16 +102,16 @@
                       <v-btn
                         color="primary"
                         text
-                        @click="root_push()"
+                        @click="category_push()"
                       >
-                        同意する
+                        規約を守って利用する
                       </v-btn>
                     </v-card-actions>
                   </v-card>
             </v-dialog>
           </v-col>
 
-          <v-col
+          <!-- <v-col
             col="6">
             <v-btn
               block
@@ -71,7 +120,7 @@
             >
             過去に利用した頃がある方はこちら
             </v-btn>
-          </v-col>
+          </v-col> -->
         </v-row>
 
     </v-container>
@@ -119,8 +168,10 @@ export default {
             this.$router.push({ path: `/categories` })
         },
         root_push() {
-            this.dialog = false
             this.$router.push({ path: `/` })
+        },
+        contact_push() {
+            this.$router.push({ path: `/contact` })
         },
     },
 }
@@ -132,6 +183,25 @@ export default {
 .v-card {
   margin: 0.5rem;
 }
+
+#top_1 {
+  background-image: url("../assets/image/top_1.png");
+  background-position: center;
+  background-size: cover;
+}
+
+#top_2 {
+  background-image: url("../assets/image/top_2.png");
+  background-position: center;
+  background-size: cover;
+}
+
+#top_3 {
+  background-image: url("../assets/image/top_3.png");
+  background-position: center;
+  background-size: cover;
+}
+
 #home {
   height: 100vh;
 }
@@ -141,6 +211,25 @@ export default {
 }
 #home .v-btn {
   margin: 1rem auto;
-  height: 100px;
+  height: 80px;
 }
+
+#home .v-card {
+  position: relative;
+}
+
+#home .v-card .v-icon {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  color: #146929;
+  transition: transform 0.3s ease-out;
+}
+
+#home .v-card .v-icon:hover {
+  transform: rotate(30deg);
+  color:#74EC92;
+}
+
+
 </style>
