@@ -3,9 +3,9 @@
         <v-row justify="center" align="center" style="margin-top: 3rem;">
           <v-col
             sm="4"
-            @click="explanation_push(videos[0].id)"
             >
               <v-card
+                @click="explanation_push(videos[0].id)"
                 id="top_1"
                 elevation="12"
                 height="180"
@@ -16,17 +16,18 @@
                 </v-icon>
               </v-card>
               <v-container style="background-color: #f8f8f8;">
-                <v-row align="center" justify="center">
+                <v-row align="center" justify="center" style="height: 1.5rem; margin-top: 1rem;">
+
                 </v-row>
               </v-container>
           </v-col>
 
           <v-col
             sm="4"
-            @click="explanation_push(videos[1].id)"
             >
 
               <v-card
+                @click="explanation_push(videos[1].id)"
                 id="top_2"
                 elevation="12"
                 height="180"
@@ -36,7 +37,7 @@
                 >mdi-play-circle</v-icon>
               </v-card>
               <v-container style="background-color: #f8f8f8;">
-                <v-row align="center" justify="center" style="font-weight: bold;"
+                <v-row align="center" justify="center" style="font-weight: bold; cursor: pointer; height: 1.5rem; margin-top: 1rem;"
                 @click="contact_push()"
                 >
                 「お問い合わせはこちら」
@@ -46,10 +47,10 @@
 
           <v-col
             sm="4"
-            @click="explanation_push(videos[2].id)"
             >
 
               <v-card
+                @click="explanation_push(videos[2].id)"
                 elevation="12"
                 height="180"
                 id="top_3"
@@ -59,7 +60,10 @@
                 >mdi-play-circle</v-icon>
               </v-card>
               <v-container style="background-color: #f8f8f8;">
-                <v-row align="center" justify="center" style="font-weight: bold; cursor: pointer;"
+                <v-row 
+                align="center" 
+                justify="center"
+                style="font-weight: bold; cursor: pointer; height: 1.5rem; margin-top: 1rem;"
                 @click="contact_push()"
                 >
                   「お問い合わせはこちら」
