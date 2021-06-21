@@ -10,7 +10,7 @@
     </v-container>
 </template>
 
-<style>
+<style scoped>
 .v-main {
     background-color: #f8f8f8;
 }

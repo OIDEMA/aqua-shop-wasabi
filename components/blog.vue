@@ -162,7 +162,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .v-card__title p {
   margin-bottom: 0;
 }

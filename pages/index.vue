@@ -15,7 +15,7 @@
                 >mdi-play-circle
                 </v-icon>
               </v-card>
-              <v-container style="background-color: #f8f8f8;">
+              <v-container>
                 <v-row align="center" justify="center" style="height: 1.5rem; margin-top: 1rem;">
 
                 </v-row>
@@ -36,7 +36,7 @@
                   large
                 >mdi-play-circle</v-icon>
               </v-card>
-              <v-container style="background-color: #f8f8f8;">
+              <v-container>
                 <v-row align="center" justify="center" style="font-weight: bold; cursor: pointer; height: 1.5rem; margin-top: 1rem;"
                 @click="contact_push()"
                 >
@@ -59,7 +59,7 @@
                   large
                 >mdi-play-circle</v-icon>
               </v-card>
-              <v-container style="background-color: #f8f8f8;">
+              <v-container>
                 <v-row 
                 align="center" 
                 justify="center"
@@ -180,7 +180,7 @@ export default {
     },
 }
 </script>
-<style>
+<style scoped>
 .v-main {
     background-color: #f8f8f8;
 }

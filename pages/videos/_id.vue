@@ -60,7 +60,7 @@ export default {
     computed: {
         player() {
         return this.$refs.youtube.player
-        }
+      }
     },
     methods:{
         playVideo(){
@@ -77,7 +77,7 @@ export default {
     },
 }
 </script>
-<style>
+<style scoped>
 .v-main {
     background-color: #f8f8f8;
 }

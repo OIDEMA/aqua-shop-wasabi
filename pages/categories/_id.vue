@@ -53,7 +53,7 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 
 #back {
     margin: 2rem auto;
