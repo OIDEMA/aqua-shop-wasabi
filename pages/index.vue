@@ -25,7 +25,6 @@
           <v-col
             sm="4"
             >
-
               <v-card
                 @click="explanation_push(videos[1].id)"
                 id="top_2"
@@ -48,7 +47,6 @@
           <v-col
             sm="4"
             >
-
               <v-card
                 @click="explanation_push(videos[2].id)"
                 elevation="12"
@@ -69,6 +67,32 @@
                   「お問い合わせはこちら」
                 </v-row>
               </v-container>
+          </v-col>
+        </v-row>
+
+
+        <v-row justify="center" align="center" id="category">
+          <v-col
+            sm="4"
+            >
+              <v-card
+                id="top_4"
+                elevation="12"
+                height="180"
+                @click="beginner_push('xrAhVuxjEupO3f4mjS5H')"
+              >
+              </v-card>
+          </v-col>
+            <v-col
+            sm="4"
+            >
+              <v-card
+                id="top_5"
+                elevation="12"
+                height="180"
+                @click="beginner_push('16F7n5uUUaJGff6VT10I')"
+              >
+              </v-card>
           </v-col>
         </v-row>
 
@@ -131,6 +155,8 @@
 </template>
 
 <script>
+import firebase from '@/plugins/firebase'
+import 'firebase/firestore';
 export default {
     data: function() {
         return {
@@ -150,6 +176,9 @@ export default {
               },
             ]
         };
+    },
+    mounted() {
+      this.getCategories()  
     },
     computed: {
         player() {
@@ -171,14 +200,50 @@ export default {
         category_push() {
             this.$router.push({ path: `/categories` })
         },
+        beginner_push(id) {
+            this.$router.push({ path: `/beginner/${id}` })
+        },
         root_push() {
             this.$router.push({ path: `/` })
         },
         contact_push() {
             this.$router.push({ path: `/contact` })
         },
-    },
-}
+        getCategories() {
+        const firestore = firebase.firestore()
+        const categories = firestore.collection('top_categories')
+        categories
+        .get()
+          .then((doc) => {
+            doc.docs.forEach(category => {
+              firestore.collection('top_categories').doc(category.id)
+                .get()
+                  .then(async(doc) => {
+                    await this.getCategoryId(doc.data())
+                  }
+                )
+                .catch((err) => {
+                  throw err
+                })
+            })
+          })
+      },
+      async getCategoryId(category) {
+        firebase.firestore().collection('top_categories')
+          .where('title', '==', category.title)
+          .get()
+            .then( async (snapshots) => {
+              const categoryId = await snapshots.docs[0].id
+              const item = Object.assign( { uid: categoryId }, category )
+              console.log({item:    item})
+              this.categories.push(item)
+            })
+            .catch((err) => {
+              throw err
+            })
+      },
+    }
+  }
 </script>
 <style scoped>
 .v-main {
@@ -202,6 +267,16 @@ export default {
 
 #top_3 {
   background-image: url("../assets/image/top_3.png");
+  background-position: center;
+  background-size: cover;
+}
+#top_4 {
+  background-image: url("../assets/image/top_4.png");
+  background-position: center;
+  background-size: cover;
+}
+#top_5 {
+  background-image: url("../assets/image/top_5.jpeg");
   background-position: center;
   background-size: cover;
 }
@@ -235,5 +310,12 @@ export default {
   color:#74EC92;
 }
 
-
+#category .container {
+    margin: 1rem auto;
+    height: 100vh;
+    background-color: #fff;
+}
+.v-card__text {
+    height: 100%;
+}
 </style>

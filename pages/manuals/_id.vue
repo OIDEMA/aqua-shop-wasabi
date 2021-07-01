@@ -69,7 +69,7 @@ export default {
  }
 }
 </script>
-<style scoped>
+<style>
 .v-main {
     background-color: #f8f8f8;
 }

@@ -14,8 +14,8 @@
                 @click="category_push(category.uid)"
             >
                 <v-avatar
-                color="success"
-                size="52"
+                  color="success"
+                  size="52"
                 >
                 <span class="white--text text-h5">{{ category.id }}</span>
                 </v-avatar>
