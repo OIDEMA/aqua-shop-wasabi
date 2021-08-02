@@ -10,11 +10,14 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.5",
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.8.3",
     "firebase": "^8.6.2",
     "moment": "^2.29.1",
     "nuxt": "^2.14.12",
+    "vue-awesome-swiper": "^4.1.1",
+    "vue-infinite-loading": "^2.4.5",
     "vue-youtube": "^1.4.0"
   },
   "devDependencies": {

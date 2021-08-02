@@ -228,6 +228,7 @@ export default {
             })
           })
       },
+      // uidを取得するだけの処理
       async getCategoryId(category) {
         firebase.firestore().collection('top_categories')
           .where('title', '==', category.title)
@@ -235,7 +236,7 @@ export default {
             .then( async (snapshots) => {
               const categoryId = await snapshots.docs[0].id
               const item = Object.assign( { uid: categoryId }, category )
-              console.log({item:    item})
+              console.log({item: item})
               this.categories.push(item)
             })
             .catch((err) => {

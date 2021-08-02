@@ -27,7 +27,9 @@ export default {
       { src: '@/plugins/date-format.js' },
       { src: '@/plugins/replace-filter.js' },
       { src: '@/plugins/vue-youtube.js' },
-      { src: '@/plugins/firebase.js' }
+      { src: '@/plugins/firebase.js' },
+      { src: '@/plugins/infiniteLoading', ssr: false },
+      { src: '@/plugins/vue-awesome-swiper', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

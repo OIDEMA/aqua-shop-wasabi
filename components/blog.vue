@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid pa-0 ma-0>
+  <v-container id="top" fluid pa-0 ma-0>
     <v-container fluid>
       <v-row>
         <v-col>
@@ -8,10 +8,19 @@
             outlined
             label="検索キーワードを入力"
             prepend-inner-icon="mdi-text-search"
-            @keyup="searchManuals()"
+            @keyup.enter="searchManuals()"
           ></v-text-field>
         </v-col>
       </v-row>
+
+      <p style="text-align: right; margin-right: 20px;">検索HIT数
+        <span style="font-weight: bold;" v-if="this.postCount > 0">
+          {{ this.postCount }}
+          </span>
+        <span style="font-weight: bold;" v-else>
+          0
+        </span>
+      </p>
 
       <v-row justify="center" align="center">
         <v-col id="tag">
@@ -25,9 +34,9 @@
           >リフレッシュデータ</v-btn>
         </v-col>
       </v-row>
-    
+
     </v-container>
-    
+
     <v-container fluid pa-0 ma-0>
       <v-row>
         <v-col
@@ -36,11 +45,11 @@
           :key="i"
         >
           <v-card
-          class="mx-auto my-12" 
+          class="mx-auto my-12"
           max-width="344"
         >
           <v-img
-            :src="post['image']"
+            :src="post._embedded[`wp:featuredmedia`][0].source_url"
             height="220px"
             @click="manual_push(post.id)"
           ></v-img>
@@ -64,52 +73,53 @@
             <v-btn
               color="green"
               style="color: #fff;"
-              @click="manual_push(post.id)"
             >
-              もっと見る
+              確認する
             </v-btn>
-
             <v-spacer></v-spacer>
-
           </v-card-actions> -->
-
         </v-card>
+
       </v-col>
     </v-row>
+    <infinite-loading
+        ref="infiniteLoading"
+        spinner="waveDots"
+        @infinite="infiniteHandler">
+    </infinite-loading>
     </v-container>
   </v-container>
 </template>
 
 <script>
 import axios from 'axios';
-
 export default {
-
   data: function() {
     return {
-      videoId: "xTAtJHTe7xc",
       posts: [],
       tags: [],
+      postCount: Number,
       keyword: "",
-      };
+    };
   },
-  created() {
-    axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/posts/?search=`)
+  mounted() {
+    // 最新の投稿を取得
+    axios.get(`https://rocketnews24.com/wp-json/wp/v2/posts?_embed`, { params: {
+      per_page: 9,
+      meta_key: "views",
+      order: "desc"
+    }})
       .then((res) => {
-        res.data.forEach((item) => {
-          axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/media/${item[`featured_media`]}`)
-          .then(async (a) => {
-            item['image'] = await a.data.guid.rendered
-            this.posts.push(item)
-          })
-        });
+        // 投稿数の件数を取得
+        this.postCount = Number(res.headers['x-wp-total'])
+        this.posts = res.data
       }
     ),
-    axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/tags`)
+    // タグを取得
+    axios.get(`https://rocketnews24.com/wp-json/wp/v2/tags`)
       .then((res) => {
-        this.tags = res.data
-      }
-    )
+          this.tags = res.data
+        })
   },
   methods: {
     manual_push(id) {
@@ -119,44 +129,73 @@ export default {
       if (this.keyword) {
         this.posts = []
         const content = this.keyword
-        axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/posts/?search=${content}`)
-        .then((res) => {
-          res.data.forEach((item) => {
-            axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/media/${item[`featured_media`]}`)
-            .then(async (a) => {
-              item['image'] = await a.data.guid.rendered
-              this.posts.push(item)
-            })
-          });
+        axios.get(`https://rocketnews24.com/wp-json/wp/v2/posts?_embed`, { params: {
+          per_page: 9,
+          search: content
+          }
+        }).then((res) => {
+        // 投稿数の件数を取得
+        this.postCount = Number(res.headers['x-wp-total'])
+        this.posts = res.data
         })
       }
     },
     searchTag(tagId) {
       this.posts = []
-      axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/posts/?tags=${tagId}`)
-      .then((res) => {
-        res.data.forEach((item) => {
-          axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/media/${item[`featured_media`]}`)
-          .then(async (a) => {
-            item['image'] = await a.data.guid.rendered
-            this.posts.push(item)
-          })
-        });
+      axios.get(`https://rocketnews24.com/wp-json/wp/v2/posts?_embed`, { params: {
+        per_page: 9,
+        tags: tagId
+      }}).then((res) => {
+        // 投稿数の件数を取得
+        this.postCount = Number(res.headers['x-wp-total'])
+        this.posts = res.data
       })
     },
     refreshData() {
       this.posts = []
-      axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/posts/?search=`)
+      axios.get(`https://rocketnews24.com/wp-json/wp/v2/posts?_embed`, { params: {
+        per_page: 9,
+        meta_key: "views",
+        order: "desc"
+      }})
         .then((res) => {
-          res.data.forEach((item) => {
-            axios.get(`https://sanuki-udon-love.net/wp-json/wp/v2/media/${item[`featured_media`]}`)
-            .then(async (a) => {
-              item['image'] = await a.data.guid.rendered
-              this.posts.push(item)
-            })
-          });
+          // 投稿数の件数を取得
+          this.postCount = Number(res.headers['x-wp-total'])
+          this.posts = res.data
         }
       )
+    },
+    infiniteHandler() {
+      if (this.keyword) {
+      axios.get(`https://rocketnews24.com/wp-json/wp/v2/posts?_embed`, { params: {
+        per_page: 9,
+        meta_key: "views",
+        order: "desc",
+        offset: this.posts.length,
+        search: this.keyword
+      }
+      }).then(async (res) => {
+        this.posts = await this.posts.concat(res.data)
+        this.$refs.infiniteLoading.stateChanger.loaded();
+        if (this.posts.length == this.postCount) {
+          this.$refs.infiniteLoading.stateChanger.complete();
+        }
+      })
+    } else {
+      axios.get(`https://rocketnews24.com/wp-json/wp/v2/posts?_embed`, { params: {
+        per_page: 9,
+        meta_key: "views",
+        order: "desc",
+        offset: this.posts.length,
+      }
+      }).then(async (res) => {
+        this.posts = await this.posts.concat(res.data)
+        this.$refs.infiniteLoading.stateChanger.loaded();
+        if (this.posts.length == this.postCount) {
+          this.$refs.infiniteLoading.stateChanger.complete();
+        }
+      })
+    }
     }
   }
 }
@@ -170,10 +209,12 @@ export default {
   cursor: pointer;
 }
 #tag .v-btn {
-  border-radius: 20px;
   margin: 0 5px;
-  background-color: #fff !important;
-  border: 1px solid #E0E0E0;
+  background-color: #fff;
+  border-radius: 20px;
   font-weight: bold;
+  color: #3CB371;
+  border: none;
+  box-shadow: none;
 }
 </style>
